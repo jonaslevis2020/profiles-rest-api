@@ -1,15 +1,14 @@
 
 
 
-import re
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from profile_api2 import serializers
 
 # from profile_api2 import serializers
 from profile_api2.models import UserProfile
 from profile_api2.serializers import HelloSerializer
+from rest_framework.response import Response
 
 
 class HelloApiView(APIView):
@@ -63,3 +62,39 @@ class HelloApiView(APIView):
         """Delete an object"""
 
         return Response({'method': 'DELETE'})
+
+
+
+class HelloViewSet(viewsets.ViewSet):
+    """Test API ViewSet"""
+
+    serializer_class = HelloSerializer
+
+    def list(self, request):
+        """Return a list of objects"""
+
+        return Response({'http_method': 'GET'})
+
+    def create(self, request):
+        """Create an object"""
+
+        serialized_data = self.serializer_class(data=request.data)
+        if serialized_data.is_valid():
+            print(serialized_data.validated_data.get('name'))
+
+        return Response({'http_method': 'PUT'})
+
+    def update(self, request, pk=None):
+        """Hanlde updating an object"""
+
+        return Response({'http_method': 'UPDATE'})
+
+    def partial_update(self, request, pk=None):
+        """Handle updating part of an object"""
+
+        return Response({'http_method': 'PATCH'})
+
+    def destroy(self, request, pk=None):
+        """Handle removing an object"""
+
+        return Response({'http_method': 'DELETE'})
