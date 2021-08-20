@@ -11,6 +11,7 @@ from . import views
 
 router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, basename='hello-viewset')
+router.register('user-profiles', views.UserProfilesViewSet, basename='user-profiles')
 
 urlpatterns = [
     path('apiview', views.HelloApiView.as_view(), name='apiview'),
